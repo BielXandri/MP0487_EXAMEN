@@ -105,7 +105,7 @@ if (!isset($_SESSION['icon'])) {
             <div class="productTrend">
                 <img src="../View/img/products/slider/hades.jpg" alt="product">
                 <div class="caption">
-                    <h1>Hades</h1>
+                    <h1>Hdes</h1>
                 </div>
             </div>
             <div class="productTrend">
