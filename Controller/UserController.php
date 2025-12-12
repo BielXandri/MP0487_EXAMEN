@@ -173,7 +173,7 @@ class UserController
         }
 
         // Check if the email is already in the database
-        $stmt = $this->conn->prepare("SELECT Email FROM Usuario WHERE email = :mail");
+        $stmt = $this->conn->prepare("SELECT Email FROM Usuario WHERE Email = :mail");
         $stmt->bindParam(':mail', $mail);
         $stmt->execute();
         // Check if the query have at least one result
@@ -219,11 +219,12 @@ class UserController
                 header("Location: ../View/CreateAccount.php");
                 exit();
             }
-        }
-
-        $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+        }else{
+            $hashPassword = password_hash($password, PASSWORD_DEFAULT);
         try {
-            $stmt = $this->conn->prepare("INSERT INTO Usuario (`Nombre`, `Apellido`, `Email`, `Password`, `Imagen`, `Administrador`) VALUES (:name, :surname, :mail, :password, :icon, :admin)");
+            $sqlInsert = ("INSERT INTO Usuario (`Nombre`, `Apellido`, `Email`, `Password`, `Imagen`, `Administrador`) 
+            VALUES (:name , :username, :mail, :password, :icon,:admin)";
+            $stmt = $this->conn->prepare($sqlInsert);
             $stmt->bindParam(':name', $name);
             $stmt->bindParam(':surname', $surname);
             $stmt->bindParam(':mail', $mail);
@@ -261,6 +262,9 @@ class UserController
             echo __LINE__ . var_dump($e);
             $_SESSION['failMessage'] = ['message' => $e->getMessage(), 'context' => 'Fail Creating a New User'];
         }
+        }
+
+    
     }
 
     public function showDataUser(): void
